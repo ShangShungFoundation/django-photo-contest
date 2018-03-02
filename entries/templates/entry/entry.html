@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+{% load staticfiles i18n %}
+{% load bootstrap4 %}
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<meta name="author" content="Kamil Selwa">
+		<meta name="keyword" content="photo contest">
+		<title>{{ contest.title }}</title>
+		<link rel="stylesheet" href="{{ STATIC_URL }}ionicons/css/ionicons.min.css">
+		<link rel="stylesheet" href="{{ STATIC_URL }}bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" href="{{ STATIC_URL }}sweetalert/dist/sweetalert.css">
+		<link rel="stylesheet" href="{{ STATIC_URL }}css/stisla.css">
+	</head>
+
+	<body>
+
+		<section class="padding bg-grey" id="join">
+			<div class="container">
+				<h1 class=" text-center">
+					<a href="{% url 'contest' contest.slug %}">{{ contest.title }}</a>
+				</h2>
+				<h2 class="section-title text-center">Upload Photo</h2>
+				<p class="section-lead text-center text-muted">
+					{% if msg %}
+						{{ msg }}
+					{% else %}
+						Dear {{ author.first_name }}, please upload the photo and fill description details
+					{% endif %}
+				</p>
+				<div class="section-body">				
+					<div class="row ">
+						<div class="col-12 col-md-5">
+							{% if entry_form.non_field_errors %}
+							    <ul>
+							      {% for error in entry_form.non_field_errors %}
+							        <li>{{ error }}</li>
+							      {% endfor %}
+							    </ul>
+							  {% endif %}
+						</div>
+
+						<form class="contact row" id="upload-form" method="POST" enctype='multipart/form-data'>
+							{% csrf_token %}
+							{% bootstrap_field entry_form.author %}
+							{% bootstrap_field entry_form.competition %}
+							<div class="col-12 col-md-6">
+							{% bootstrap_field entry_form.image horizontal_label_class='col-6'  %}
+
+							{% bootstrap_field entry_form.category horizontal_label_class='col-6'  %}
+
+							{% bootstrap_field entry_form.title horizontal_label_class='col-6'  %}
+
+							{% bootstrap_field entry_form.description horizontal_label_class='col-6'  %}
+							</div>
+							<div class="form-group col-12 mt-2 mx-auto">
+								<button class="btn btn-primary">
+									Upload
+								</button>
+							</div>
+							
+						</form>
+					</div>
+				</div>
+			</div>
+		</section>
+	</body>
+</html>
