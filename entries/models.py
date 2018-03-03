@@ -9,7 +9,8 @@ from authors.models import Author
 
 def validate_image(fieldfile_obj):
     filesize = fieldfile_obj.file.size
-    megabyte_limit = 2.0
+    megabyte_limit = 0.5
+    #import ipdb; ipdb.set_trace()
     if filesize < megabyte_limit * 1024 * 1024:
         raise ValidationError("Min image file size is %sMB" % str(megabyte_limit))
 
